@@ -1,0 +1,98 @@
+"""
+Agriculture Air Monitoring System
+---------------------------------
+
+This Python script simulates a real-time air quality monitoring system
+specifically designed for agricultural environments such as greenhouses,
+open-field farms, or livestock enclosures.
+
+The system tracks four key atmospheric parameters:
+- Temperature (°C)
+- Humidity (%)
+- CO2 concentration (ppm)
+- PM2.5 (particulate matter, µg/m³)
+
+Features:
+- Simulates air sensor data every 2 seconds
+- Checks if values are within safe agricultural thresholds
+- Logs air quality data and issues alerts if any parameter exceeds safe limits
+- Optionally visualizes air quality trends over time using matplotlib
+
+This project supports future integration with real-world sensors and
+can serve as the basis for smart agriculture systems, automated ventilation,
+or remote environmental monitoring.
+
+Author: [Your Name]
+Date: [Project Start Date]
+"""
+sample code in example
+
+import time
+import random
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+
+# Thresholds for contaminants (e.g., PM2.5 for air, or pH for water)
+SAFE_PM25 = 35  # ug/m3 (safe air quality threshold)
+MAX_ENERGY_USAGE = 50  # watts, maximum energy usage target
+
+# Simulated sensor read (replace with real sensor API)
+def read_sensor():
+    return random.uniform(10, 100)  # Simulated PM2.5 or contaminant level
+
+# Simulated actuator control (e.g., turn purifier on/off)
+def control_purifier(power_level):
+    logging.info(f"Purifier set to {power_level}% power.")
+
+# Eco-friendly controller logic
+def eco_purification_cycle():
+    for _ in range(20):  # Simulate 20 cycles
+        contaminant_level = read_sensor()
+        logging.info(f"Contaminant Level: {contaminant_level:.2f}")
+
+        if contaminant_level > SAFE_PM25:
+            # Adjust power based on severity, while saving energy
+            power = min(100, int((contaminant_level - SAFE_PM25) * 2))
+            power = max(power, 20)  # Ensure minimum purification
+            if power * 0.5 > MAX_ENERGY_USAGE:
+                power = int(MAX_ENERGY_USAGE / 0.5)  # Eco mode energy limit
+            control_purifier(power)
+        else:
+            control_purifier(0)  # Turn off if air is clean
+
+        time.sleep(1)
+
+if __name__ == "__main__":
+    logging.info("Starting Eco-Friendly Purification System")
+    eco_purification_cycle()
+    logging.info("System Shut Down")
+
+
+output:
+
+
+2025-05-05 13:31:25,318 - Starting Eco-Friendly Purification System
+2025-05-05 13:31:25,318 - Contaminant Level: 95.12
+2025-05-05 13:31:25,318 - Purifier set to 100% power.
+2025-05-05 13:31:26,318 - Contaminant Level: 57.54
+2025-05-05 13:31:26,319 - Purifier set to 45% power.
+2025-05-05 13:31:27,319 - Contaminant Level: 92.58
+2025-05-05 13:31:27,319 - Purifier set to 100% power.
+2025-05-05 13:31:28,319 - Contaminant Level: 56.91
+2025-05-05 13:31:28,319 - Purifier set to 43% power.
+2025-05-05 13:31:29,319 - Contaminant Level: 65.58
+2025-05-05 13:31:29,319 - Purifier set to 61% power.
+
+
+exact output in codeing 
+
+
+Key Features:
+Energy aware: Limits power to conserve energy.
+
+Modular: Easily replace read_sensor() with actual hardware (e.g., DHT22, SDS011).
+
+Real-time decisions: Adjusts purifier power dynamically.
+
